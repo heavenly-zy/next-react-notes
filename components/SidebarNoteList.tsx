@@ -1,6 +1,11 @@
+import { getAllNotes } from '../libs/redis';
 import SidebarNoteItem from './SidebarNoteItem';
 
-export default function NoteList({ notes }: { notes: Notes }) {
+export default async function SidebarNoteList() {
+  const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+  await sleep(10000);
+  const notes = await getAllNotes()
+
   const arr = Object.entries(notes);
 
   if (arr.length == 0) {

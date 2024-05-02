@@ -10,7 +10,7 @@ interface Props {
   expandedChildren: React.ReactNode;
 }
 
-export default function SidebarNoteContent({
+export default function SidebarNoteItemContent({
   id,
   title,
   children,
