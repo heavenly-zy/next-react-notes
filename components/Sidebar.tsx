@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import SidebarNoteList from './SidebarNoteList';
 import { getAllNotes } from '../libs/redis';
+import EditButton from './EditButton';
 
 export default async function Sidebar() {
   const notes = await getAllNotes()
@@ -22,7 +23,7 @@ export default async function Sidebar() {
           </section>
         </Link>
         <section className="sidebar-menu" role="menubar">
-          {/* SideSearchField */}
+          <EditButton noteId={null}>New</EditButton>
         </section>
         <nav>
           <SidebarNoteList notes={notes} />
