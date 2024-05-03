@@ -26,7 +26,7 @@ export async function updateNote(uuid: string, data: Callback<number> | undefine
   await redis.hset("notes", [uuid], data);
 }
 
-export async function getNote(uuid: string) {
+export async function getNote<T>(uuid: string): Promise<Awaited<T>> {
   return JSON.parse(await redis.hget("notes", uuid) as string);
 }
 
