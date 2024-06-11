@@ -23,7 +23,7 @@ export default async function EditPage({ params }: { params: { id: string } }) {
     <NoteEditor
       noteId={noteId}
       initialTitle={note.title}
-      initialBody={note.content}
+      initialBody={note.content ?? ''}
     />
   );
 }

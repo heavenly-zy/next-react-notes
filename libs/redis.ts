@@ -16,14 +16,14 @@ export async function getAllNotes() {
   return await redis.hgetall("notes")
 }
 
-export async function addNote(data: Callback<number> | undefined) {
+export async function addNote(data: string) {
   const uuid = Date.now().toString();
-  await redis.hset("notes", [uuid], data);
+  await redis.hset("notes", uuid, data);
   return uuid
 }
 
-export async function updateNote(uuid: string, data: Callback<number> | undefined) {
-  await redis.hset("notes", [uuid], data);
+export async function updateNote(uuid: string, data: string) {
+  await redis.hset("notes", uuid, data);
 }
 
 export async function getNote<T>(uuid: string): Promise<Awaited<T>> {

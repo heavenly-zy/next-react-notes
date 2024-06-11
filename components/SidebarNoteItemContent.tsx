@@ -60,7 +60,7 @@ export default function SidebarNoteItemContent({
             : '1px solid transparent',
         }}
         onClick={() => {
-          const sidebarToggle = document.getElementById('sidebar-toggle');
+          const sidebarToggle = document.getElementById('sidebar-toggle') as HTMLInputElement;
           if (sidebarToggle) {
             sidebarToggle.checked = true;
           }

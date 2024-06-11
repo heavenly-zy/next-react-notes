@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import NotePreview from '@/components/NotePreview';
 import { useFormStatus } from 'react-dom';
+import { deleteNote, saveNote } from '@/app/action';
 
 interface Props {
   noteId?: string;
   initialTitle: Note['title'];
-  initialBody: Note['content'];
+  initialBody: Required<Note>['content'];
 }
 
 export default function NoteEditor({ noteId, initialTitle, initialBody }: Props) {
@@ -46,6 +47,7 @@ export default function NoteEditor({ noteId, initialTitle, initialBody }: Props)
             className="note-editor-done"
             disabled={pending}
             type="submit"
+            formAction={() => saveNote(title, body, noteId)}
             role="menuitem"
           >
             <img
@@ -61,6 +63,7 @@ export default function NoteEditor({ noteId, initialTitle, initialBody }: Props)
             <button
               className="note-editor-delete"
               disabled={pending}
+              formAction={() => deleteNote(noteId)}
               role="menuitem"
             >
               <img
