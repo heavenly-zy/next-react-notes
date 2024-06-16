@@ -11,7 +11,11 @@ interface Props {
   initialBody: Required<Note>['content'];
 }
 
-export default function NoteEditor({ noteId, initialTitle, initialBody }: Props) {
+export default function NoteEditor({
+  noteId,
+  initialTitle,
+  initialBody,
+}: Props) {
   // pending 表示父级 <form> 是否正在等待提交。如果为 true，则表示表单正在提交中；否则为 false
   const { pending } = useFormStatus();
   const [title, setTitle] = useState(initialTitle);
@@ -21,33 +25,13 @@ export default function NoteEditor({ noteId, initialTitle, initialBody }: Props)
   return (
     <div className="note-editor">
       <form className="note-editor-form" autoComplete="off">
-        <label className="offscreen" htmlFor="note-title-input">
-          Enter a title for your note
-        </label>
-        <input
-          id="note-title-input"
-          type="text"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
-        <label className="offscreen" htmlFor="note-body-input">
-          Enter the body for your note
-        </label>
-        <textarea
-          value={body}
-          id="note-body-input"
-          onChange={(e) => setBody(e.target.value)}
-        />
-      </form>
-      <div className="note-editor-preview">
-        <form className="note-editor-menu" role="menubar">
+        <div className="note-editor-menu" role="menubar">
+          <input type="hidden" name="noteId" value={noteId} />
           <button
             className="note-editor-done"
             disabled={pending}
             type="submit"
-            formAction={() => saveNote(title, body, noteId)}
+            formAction={saveNote}
             role="menuitem"
           >
             <img
@@ -63,7 +47,7 @@ export default function NoteEditor({ noteId, initialTitle, initialBody }: Props)
             <button
               className="note-editor-delete"
               disabled={pending}
-              formAction={() => deleteNote(noteId)}
+              formAction={deleteNote}
               role="menuitem"
             >
               <img
@@ -76,7 +60,30 @@ export default function NoteEditor({ noteId, initialTitle, initialBody }: Props)
               Delete
             </button>
           )}
-        </form>
+        </div>
+        <label className="offscreen" htmlFor="note-title-input">
+          Enter a title for your note
+        </label>
+        <input
+          id="note-title-input"
+          type="text"
+          name="title"
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+        <label className="offscreen" htmlFor="note-body-input">
+          Enter the body for your note
+        </label>
+        <textarea
+          name="body"
+          value={body}
+          id="note-body-input"
+          onChange={(e) => setBody(e.target.value)}
+        />
+      </form>
+      <div className="note-editor-preview">
         <div className="label label--preview" role="status">
           Preview
         </div>

@@ -4,10 +4,12 @@ import { redirect } from 'next/navigation';
 import { addNote, updateNote, delNote } from '@/libs/redis';
 import { revalidatePath } from 'next/cache';
 
-export async function saveNote(title: string, body: string, noteId?: string) {
+export async function saveNote(formData: FormData) {
+  const noteId = formData.get('noteId') as string | undefined;
+
   const data = JSON.stringify({
-    title,
-    content: body,
+    title: formData.get('title'),
+    content: formData.get('body'),
     updateTime: new Date(),
   });
 
@@ -22,7 +24,9 @@ export async function saveNote(title: string, body: string, noteId?: string) {
   }
 }
 
-export async function deleteNote(noteId: string) {
+export async function deleteNote(formData: FormData) {
+  const noteId = formData.get('noteId') as string | undefined;
+  if (!noteId) return;
   delNote(noteId);
   revalidatePath('/', 'layout');
   redirect('/');
