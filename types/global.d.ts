@@ -7,3 +7,7 @@ interface Note {
   content?: string;
   updateTime?: string;
 }
+
+type TEditorFormState = {
+  message?: string | null;
+} | void;
