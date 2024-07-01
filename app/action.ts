@@ -3,6 +3,13 @@
 import { redirect } from 'next/navigation';
 import { addNote, updateNote, delNote } from '@/libs/redis';
 import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
+import { TEditorFormState } from '@/types';
+
+const schema = z.object({
+  title: z.string(),
+  content: z.string().min(1, '请填写内容').max(100, '字数最多 100'),
+});
 
 export async function saveNote(
   prevState: TEditorFormState,
@@ -10,17 +17,25 @@ export async function saveNote(
 ) {
   const noteId = formData.get('noteId') as string | undefined;
 
-  const data = JSON.stringify({
+  const data = {
     title: formData.get('title'),
     content: formData.get('body'),
     updateTime: new Date(),
-  });
+  };
+
+  // 校验数据
+  const validated = schema.safeParse(data);
+  if (!validated.success) {
+    return {
+      errors: validated.error.issues,
+    };
+  }
 
   if (noteId) {
-    updateNote(noteId, data);
+    await updateNote(noteId, JSON.stringify(data));
     revalidatePath('/', 'layout');
   } else {
-    const res = await addNote(data);
+    await addNote(JSON.stringify(data));
     revalidatePath('/', 'layout');
   }
   return { message: `Add Success!` };
