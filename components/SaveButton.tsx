@@ -5,6 +5,8 @@ interface Props {
 }
 
 export default function EditButton({ formAction }: Props) {
+  // useFormStatus 只能用在 form 元素内部使用
+  // https://zh-hans.react.dev/reference/react-dom/hooks/useFormStatus#troubleshooting
   const { pending } = useFormStatus();
   return (
     <button
