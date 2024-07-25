@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Sidebar from '@/components/Sidebar';
 import { locales } from '@/config';
+import { TLocale } from '@/types';
+import { Footer } from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,15 +20,16 @@ export async function generateStaticParams() {
 export default function RootLayout({
   children,
   params: { lng },
-}: Readonly<{ children: React.ReactNode; params: { lng: string } }>) {
+}: Readonly<{ children: React.ReactNode; params: { lng: TLocale } }>) {
   return (
     <html lang={lng}>
       <body className={inter.className}>
         <div className="container">
           <div className="main">
-            <Sidebar />
+            <Sidebar lng={lng} />
             <section className="col note-viewer">{children}</section>
           </div>
+          <Footer lng={lng} />
         </div>
       </body>
     </html>

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslation } from '@/app/i18n/client';
+import { TLocale } from '@/types';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
@@ -13,7 +15,8 @@ function Spinner({ active = true }) {
   );
 }
 
-export default function SidebarSearchField() {
+export default function SidebarSearchField({ lng }: { lng: TLocale }) {
+  const { t } = useTranslation(lng, 'basic');
   const { replace } = useRouter();
   const pathname = usePathname();
   // useTransition 适合在这种频繁非紧急的更新中使用，有效防止造成阻塞
@@ -39,7 +42,7 @@ export default function SidebarSearchField() {
       </label>
       <input
         id="sidebar-search-input"
-        placeholder="Search"
+        placeholder={t('search')}
         type="text"
         onChange={(e) => handleSearch(e.target.value)}
       />
