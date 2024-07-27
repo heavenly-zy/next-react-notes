@@ -4,8 +4,16 @@ import SidebarNoteList from './SidebarNoteList';
 import EditButton from './EditButton';
 import NoteListSkeleton from './NoteListSkeleton';
 import SidebarSearchField from './SidebarSearchField';
+import {
+  NextIntlClientProvider,
+  useMessages,
+  useTranslations,
+} from 'next-intl';
 
-export default async function Sidebar() {
+export default function Sidebar() {
+  const t = useTranslations('Basic');
+  const messages = useMessages();
+
   return (
     <>
       <section className="col sidebar">
@@ -23,8 +31,10 @@ export default async function Sidebar() {
           </section>
         </Link>
         <section className="sidebar-menu" role="menubar">
-          <SidebarSearchField />
-          <EditButton noteId={null}>New</EditButton>
+          <NextIntlClientProvider messages={{ Basic: messages.Basic }}>
+            <SidebarSearchField />
+          </NextIntlClientProvider>
+          <EditButton noteId={null}>{t('new')}</EditButton>
         </section>
         <nav>
           <Suspense fallback={<NoteListSkeleton />}>
