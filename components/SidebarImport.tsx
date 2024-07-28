@@ -1,24 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { importNote } from '@/actions';
+import { useFormStatus } from 'react-dom';
 
 export default function SidebarImport() {
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileInput = e.target;
-
-    if (!fileInput.files || fileInput.files.length === 0) {
+  async function upload(formData: FormData) {
+    const file = formData.get('file');
+    if (!file) {
       console.warn('files list is empty');
       return;
     }
-
-    const file = fileInput.files[0];
-
-    const formData = new FormData();
-    formData.append('file', file);
 
     try {
       const data = await importNote(formData);
@@ -28,23 +24,25 @@ export default function SidebarImport() {
     }
 
     // 重置 file input
-    e.target.type = 'text';
-    e.target.type = 'file';
-  };
+    formRef.current?.reset();
+  }
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <form style={{ textAlign: 'center' }} action={upload} ref={formRef}>
       <label htmlFor="file" style={{ cursor: 'pointer' }}>
         Import .md File
       </label>
-      <input
-        type="file"
-        id="file"
-        name="file"
-        style={{ position: 'absolute', clipPath: 'rect(0 0 0 0)' }}
-        onChange={onChange}
-        accept=".md"
-      />
-    </div>
+      <input type="file" id="file" name="file" accept=".md" />
+      <div>
+        <Submit />
+      </div>
+    </form>
+  );
+}
+
+function Submit() {
+  const { pending } = useFormStatus();
+  return (
+    <button disabled={pending}>{pending ? 'Submitting' : 'Submit'}</button>
   );
 }
