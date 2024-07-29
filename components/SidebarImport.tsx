@@ -52,7 +52,7 @@ export default function SidebarImport() {
         type="file"
         id="file"
         name="file"
-        style={{ position: 'absolute', clipPath: 'rect(0 0 0 0)' }}
+        hidden
         onChange={onChange}
         accept=".md"
       />
