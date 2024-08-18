@@ -1,11 +1,11 @@
 import Note from '@/components/Note';
-import { getNote } from '@/libs/redis';
+import { getNote } from '@/libs/strapi';
 import { sleep } from '@/utils';
 
 export default async function Page({ params }: { params: { id: string } }) {
   // 动态路由 获取笔记 id
   const noteId = params.id;
-  const note = await getNote<Note>(noteId);
+  const note = await getNote(noteId);
 
   // 为了让 Suspense 的效果更明显
   await sleep(5000);

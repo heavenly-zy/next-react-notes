@@ -1,10 +1,10 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { addNote, updateNote, delNote } from '@/libs/redis';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { TEditorFormState } from '@/types';
+import { addNote, delNote, updateNote } from '@/libs/strapi';
 
 const schema = z.object({
   title: z.string(),
