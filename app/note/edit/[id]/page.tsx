@@ -1,5 +1,5 @@
 import NoteEditor from '@/components/NoteEditor';
-import { getNote } from '@/libs/strapi';
+import { getNote } from '@/libs/prisma';
 import { sleep } from '@/utils';
 
 export default async function EditPage({ params }: { params: { id: string } }) {
@@ -22,8 +22,8 @@ export default async function EditPage({ params }: { params: { id: string } }) {
   return (
     <NoteEditor
       noteId={noteId}
-      initialTitle={note.title}
-      initialBody={note.content ?? ''}
+      initialTitle={note?.title}
+      initialBody={note?.content ?? ''}
     />
   );
 }

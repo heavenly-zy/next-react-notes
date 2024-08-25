@@ -1,5 +1,5 @@
 import Note from '@/components/Note';
-import { getNote } from '@/libs/strapi';
+import { getNote } from '@/libs/prisma';
 import { sleep } from '@/utils';
 
 export default async function Page({ params }: { params: { id: string } }) {

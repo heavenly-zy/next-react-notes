@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { TEditorFormState } from '@/types';
-import { addNote, delNote, updateNote } from '@/libs/strapi';
+import { addNote, delNote, updateNote } from '@/libs/prisma';
 
 const schema = z.object({
   title: z.string(),
