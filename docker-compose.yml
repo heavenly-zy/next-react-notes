@@ -15,7 +15,7 @@ services:
       - MYSQL_ROOT_PASSWORD=admin
       - MYSQL_DATABASE=notes
       - MYSQL_USER=notes
-      - MYSQL_PASSWORD=cpZfriEBbmJjWeiR
+      - MYSQL_PASSWORD=G6Hp2is8HmWYzT7h
     ports:
       - '3306:3306'
     healthcheck:
