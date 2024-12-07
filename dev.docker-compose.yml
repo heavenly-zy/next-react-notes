@@ -15,6 +15,7 @@ services:
       - .env.development
     volumes:
       - .:/app
+      - /app/node_modules
     restart: always
     ports:
       - 3000:3000
