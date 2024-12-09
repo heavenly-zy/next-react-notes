@@ -46,3 +46,19 @@ services:
       retries: 20
     networks:
       - react-notes-dev
+
+  nginx:
+    image: nginx
+    container_name: next-app-nginx
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/ssl/notes.silkyheart.me.key:/etc/nginx/ssl/notes.silkyheart.me.key
+      - ./docker/ssl/notes.silkyheart.me.pem:/etc/nginx/ssl/notes.silkyheart.me.pem
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    networks:
+      - react-notes-dev
+    depends_on:
+      - next-app-dev
